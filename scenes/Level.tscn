@@ -1,0 +1,539 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/Level.gd" type="Script" id=2]
+[ext_resource path="res://scripts/HighScore.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/Pixellari.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://scripts/Score.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Camera2D.gd" type="Script" id=6]
+[ext_resource path="res://scenes/enemies/Melee_Enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://scenes/enemies/Fast_Enemy.tscn" type="PackedScene" id=8]
+[ext_resource path="res://scenes/PowerUp/PowerUp_Reload.tscn" type="PackedScene" id=9]
+[ext_resource path="res://assets/music/Menu.wav" type="AudioStream" id=10]
+[ext_resource path="res://assets/player/Square.png" type="Texture" id=11]
+[ext_resource path="res://assets/player/Hearts1.png" type="Texture" id=12]
+[ext_resource path="res://scenes/UI/WorldEnvironment.tscn" type="PackedScene" id=13]
+[ext_resource path="res://assets/player/Hearts2.png" type="Texture" id=14]
+[ext_resource path="res://assets/player/Hearts3.png" type="Texture" id=15]
+[ext_resource path="res://scripts/FadeIn.gd" type="Script" id=16]
+[ext_resource path="res://scripts/HUD.gd" type="Script" id=17]
+[ext_resource path="res://scenes/enemies/TankEnemy.tscn" type="PackedScene" id=18]
+[ext_resource path="res://PixelFont.tres" type="DynamicFont" id=19]
+[ext_resource path="res://scenes/PowerUp/PowerUp_Heal.tscn" type="PackedScene" id=20]
+[ext_resource path="res://scenes/Joystick.tscn" type="PackedScene" id=21]
+[ext_resource path="res://assets/UI/Pause.png" type="Texture" id=22]
+[ext_resource path="res://assets/UI/Quit.png" type="Texture" id=23]
+[ext_resource path="res://assets/UI/Play.png" type="Texture" id=24]
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+render_mode unshaded;
+uniform int blurSize : hint_range(0,20);
+
+void fragment(){
+	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, float(blurSize)/10.0);
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/blurSize = 10
+
+[sub_resource type="DynamicFont" id=1]
+size = 128
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "FadeIn"
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "death_fade_in"
+} ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeOut"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=4]
+
+[sub_resource type="Animation" id=5]
+resource_name = "FadeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 4 )
+
+[sub_resource type="Animation" id=7]
+resource_name = "FadeIn"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("../../BlurEffect:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.196078, 0.196078, 0.196078, 0 ), Color( 0.196078, 0.196078, 0.196078, 1 ) ]
+}
+
+[node name="Level" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+enemies = [ ExtResource( 7 ), ExtResource( 8 ), ExtResource( 18 ) ]
+power_ups = [ ExtResource( 9 ), ExtResource( 20 ) ]
+
+[node name="BlurEffect" type="Sprite" parent="."]
+modulate = Color( 0.196078, 0.196078, 0.196078, 0 )
+material = SubResource( 9 )
+position = Vector2( 320, 180 )
+scale = Vector2( 40, 25 )
+z_index = 21
+texture = ExtResource( 11 )
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+pause_mode = 1
+modulate = Color( 1, 1, 1, 1 )
+position = Vector2( 320, 180 )
+id = 10
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 13 )]
+
+[node name="SpawnTimer" type="Timer" parent="."]
+pause_mode = 1
+wait_time = 2.0
+autostart = true
+
+[node name="DifficultyTimer" type="Timer" parent="."]
+pause_mode = 1
+wait_time = 2.0
+autostart = true
+
+[node name="PowerUpSpawnTimer" type="Timer" parent="."]
+pause_mode = 1
+wait_time = 10.0
+autostart = true
+
+[node name="ScoreUI" type="Node2D" parent="."]
+pause_mode = 2
+z_index = 20
+
+[node name="HUD" type="Control" parent="ScoreUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerImageBack" type="TextureRect" parent="ScoreUI/HUD"]
+modulate = Color( 0.211765, 0.188235, 0.188235, 1 )
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 50.0
+margin_bottom = 50.0
+rect_scale = Vector2( 0.8, 0.8 )
+texture = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerImage" type="TextureRect" parent="ScoreUI/HUD"]
+margin_left = 12.0
+margin_top = 12.0
+margin_right = 52.0
+margin_bottom = 52.0
+rect_scale = Vector2( 0.7, 0.7 )
+texture = ExtResource( 11 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ThirdHeart" type="TextureRect" parent="ScoreUI/HUD"]
+margin_left = 42.0
+margin_top = 10.0
+margin_right = 51.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 8 )
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 15 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SecondHeart" type="TextureRect" parent="ScoreUI/HUD"]
+margin_left = 42.0
+margin_top = 10.0
+margin_right = 51.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 8 )
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 14 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullHeart" type="TextureRect" parent="ScoreUI/HUD"]
+margin_left = 42.0
+margin_top = 10.0
+margin_right = 69.0
+margin_bottom = 18.0
+rect_min_size = Vector2( 0, 8 )
+rect_scale = Vector2( 4, 4 )
+texture = ExtResource( 12 )
+expand = true
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XPBack" type="TextureRect" parent="ScoreUI/HUD"]
+modulate = Color( 0.211765, 0.188235, 0.188235, 1 )
+margin_left = 10.0
+margin_top = 45.0
+margin_right = 290.0
+margin_bottom = 61.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 11 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="XP" type="TextureRect" parent="ScoreUI/HUD"]
+modulate = Color( 0.996078, 0.984314, 0.278431, 1 )
+margin_left = 10.0
+margin_top = 45.0
+margin_right = 282.382
+margin_bottom = 61.0
+rect_scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 11 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StunTimer" type="Timer" parent="ScoreUI/HUD"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Level" type="Label" parent="ScoreUI/HUD"]
+margin_left = 10.0
+margin_top = 55.0669
+margin_right = 50.0
+margin_bottom = 69.0669
+rect_scale = Vector2( 0.4, 0.4 )
+custom_fonts/font = ExtResource( 19 )
+text = "Level 1"
+
+[node name="Progress" type="Label" parent="ScoreUI/HUD"]
+margin_left = 109.921
+margin_top = 55.0669
+margin_right = 209.921
+margin_bottom = 87.0669
+rect_scale = Vector2( 0.4, 0.4 )
+custom_fonts/font = ExtResource( 19 )
+text = "95/100"
+align = 2
+
+[node name="Control" type="Control" parent="ScoreUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="ScoreUI/Control"]
+margin_top = 10.0
+margin_right = 2118.0
+margin_bottom = 138.0
+rect_scale = Vector2( 0.3, 0.3 )
+custom_fonts/font = SubResource( 1 )
+text = "0"
+align = 1
+valign = 1
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighScore" type="Label" parent="ScoreUI/Control"]
+margin_top = 47.0
+margin_right = 6321.0
+margin_bottom = 175.0
+rect_scale = Vector2( 0.1, 0.1 )
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 0.458824, 0.419608, 0.419608, 1 )
+text = "0"
+align = 1
+valign = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FadeIn" type="ColorRect" parent="ScoreUI/Control"]
+visible = false
+margin_right = 640.0
+margin_bottom = 360.0
+color = Color( 0, 0, 0, 0 )
+script = ExtResource( 16 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScoreUI/Control/FadeIn"]
+anims/FadeIn = SubResource( 2 )
+anims/FadeOut = SubResource( 3 )
+
+[node name="Pause" type="Button" parent="ScoreUI/Control"]
+margin_left = 581.862
+margin_top = -7.07108
+margin_right = 609.862
+margin_bottom = 30.9289
+rect_scale = Vector2( 2, 2 )
+focus_mode = 0
+custom_fonts/font = ExtResource( 19 )
+enabled_focus_mode = 0
+icon = ExtResource( 22 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Death" type="Control" parent="ScoreUI"]
+modulate = Color( 1, 1, 1, 0 )
+margin_right = 640.0
+margin_bottom = 360.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YouDied" type="Label" parent="ScoreUI/Death"]
+margin_left = 283.0
+margin_top = 64.5
+margin_right = 357.0
+margin_bottom = 80.5
+rect_scale = Vector2( 2, 2 )
+rect_pivot_offset = Vector2( 37, 0 )
+custom_fonts/font = SubResource( 4 )
+text = "YOU DIED"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ScoreUI/Death"]
+anims/FadeIn = SubResource( 5 )
+
+[node name="CenterContainer" type="CenterContainer" parent="ScoreUI/Death"]
+margin_right = 640.0
+margin_bottom = 360.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScoreUI/Death/CenterContainer"]
+margin_left = 208.0
+margin_top = 111.0
+margin_right = 432.0
+margin_bottom = 249.0
+alignment = 1
+
+[node name="Score" type="Label" parent="ScoreUI/Death/CenterContainer/VBoxContainer"]
+margin_right = 224.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 19 )
+text = "Score: 0000"
+align = 1
+valign = 1
+
+[node name="MaxScore" type="Label" parent="ScoreUI/Death/CenterContainer/VBoxContainer"]
+margin_top = 36.0
+margin_right = 224.0
+margin_bottom = 68.0
+custom_fonts/font = ExtResource( 19 )
+text = "New Highscore!"
+align = 1
+valign = 1
+
+[node name="Money" type="Label" parent="ScoreUI/Death/CenterContainer/VBoxContainer"]
+margin_top = 72.0
+margin_right = 224.0
+margin_bottom = 104.0
+custom_fonts/font = ExtResource( 19 )
+text = "Money +100"
+align = 1
+valign = 1
+
+[node name="HSeparator" type="HSeparator" parent="ScoreUI/Death/CenterContainer/VBoxContainer"]
+margin_top = 108.0
+margin_right = 224.0
+margin_bottom = 112.0
+
+[node name="Menu" type="Button" parent="ScoreUI/Death/CenterContainer/VBoxContainer"]
+margin_top = 116.0
+margin_right = 224.0
+margin_bottom = 138.0
+custom_fonts/font = SubResource( 6 )
+text = "Menu"
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameplayCamera" type="Camera2D" parent="."]
+position = Vector2( 320, 180 )
+current = true
+script = ExtResource( 6 )
+
+[node name="ScreenShakeTime" type="Timer" parent="GameplayCamera"]
+one_shot = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -20.0
+
+[node name="MovementJoystick" parent="." instance=ExtResource( 21 )]
+position = Vector2( 76, 292.634 )
+scale = Vector2( 2.5, 2.5 )
+z_index = 2
+
+[node name="ShootingJoystick" parent="." instance=ExtResource( 21 )]
+position = Vector2( 555.458, 292.634 )
+scale = Vector2( 2.5, 2.5 )
+z_index = 2
+
+[node name="PauseNode" type="Node2D" parent="."]
+z_index = 22
+
+[node name="Pause" type="Control" parent="PauseNode"]
+visible = false
+margin_right = 640.0
+margin_bottom = 360.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PauseNode/Pause"]
+anims/FadeIn = SubResource( 7 )
+
+[node name="GamePaused" type="Label" parent="PauseNode/Pause"]
+margin_top = 100.0
+margin_right = 320.0
+margin_bottom = 132.0
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = ExtResource( 19 )
+text = "Paused"
+align = 1
+valign = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseNode/Pause"]
+margin_top = 200.0
+margin_right = 320.0
+margin_bottom = 222.0
+rect_scale = Vector2( 2, 2 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Continue" type="Button" parent="PauseNode/Pause/HBoxContainer"]
+margin_left = 130.0
+margin_right = 158.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 6 )
+icon = ExtResource( 24 )
+flat = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuP" type="Button" parent="PauseNode/Pause/HBoxContainer"]
+margin_left = 162.0
+margin_right = 190.0
+margin_bottom = 22.0
+custom_fonts/font = SubResource( 6 )
+icon = ExtResource( 23 )
+flat = true
+[connection signal="dead" from="Player" to="." method="_on_Player_dead"]
+[connection signal="health_updated" from="Player" to="ScoreUI/HUD" method="_on_Player_health_updated"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="timeout" from="DifficultyTimer" to="." method="_on_DifficultyTimer_timeout"]
+[connection signal="timeout" from="PowerUpSpawnTimer" to="." method="_on_PowerUpSpawnTimer_timeout"]
+[connection signal="timeout" from="ScoreUI/HUD/StunTimer" to="ScoreUI/HUD" method="_on_StunTimer_timeout"]
+[connection signal="pressed" from="ScoreUI/Control/Pause" to="." method="_on_Pause_pressed"]
+[connection signal="pressed" from="ScoreUI/Death/CenterContainer/VBoxContainer/Menu" to="." method="_on_Menu_pressed"]
+[connection signal="timeout" from="GameplayCamera/ScreenShakeTime" to="GameplayCamera" method="_on_ScreenShakeTime_timeout"]
+[connection signal="finished" from="Music" to="." method="_on_Music_finished"]
+[connection signal="pressed" from="PauseNode/Pause/HBoxContainer/Continue" to="." method="_on_Continue_pressed"]
+[connection signal="pressed" from="PauseNode/Pause/HBoxContainer/MenuP" to="." method="_on_MenuP_pressed"]
+
+[editable path="Player"]

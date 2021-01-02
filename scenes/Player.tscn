@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://assets/player/Square.png" type="Texture" id=2]
+[ext_resource path="res://assets/fonts/Pixellari.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/sounds/Powerup.wav" type="AudioStream" id=4]
+[ext_resource path="res://scenes/soundEffects/PowerUp.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/sounds/Damage.wav" type="AudioStream" id=6]
+[ext_resource path="res://assets/sounds/Death.wav" type="AudioStream" id=7]
+[ext_resource path="res://assets/sounds/Shoot.wav" type="AudioStream" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 6, 6 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 3 )
+
+[node name="Player" type="Sprite"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 1 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )
+sounds = [ ExtResource( 5 ) ]
+
+[node name="StunTimer" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
+
+[node name="Reload_speed" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="PowerUpCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="Hitbox" type="Area2D" parent="." groups=[
+"Player",
+]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -37.5
+margin_top = -36.058
+margin_right = 21.5
+margin_bottom = -20.058
+custom_fonts/font = SubResource( 2 )
+text = "Player 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sounds" type="Node2D" parent="."]
+
+[node name="PowerUp" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 4 )
+volume_db = -20.0
+
+[node name="Shoot" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 8 )
+volume_db = -15.0
+
+[node name="Damage" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 6 )
+volume_db = -20.0
+
+[node name="Death" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource( 7 )
+volume_db = -20.0
+[connection signal="timeout" from="StunTimer" to="." method="_on_StunTimer_timeout"]
+[connection signal="timeout" from="Reload_speed" to="." method="_on_Reload_speed_timeout"]
+[connection signal="timeout" from="PowerUpCooldown" to="." method="_on_PowerUpCooldown_timeout"]
+[connection signal="area_entered" from="Hitbox" to="." method="_on_Hitbox_area_entered"]

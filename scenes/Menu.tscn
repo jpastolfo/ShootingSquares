@@ -1,0 +1,1383 @@
+[gd_scene load_steps=45 format=2]
+
+[ext_resource path="res://assets/UI/Play.png" type="Texture" id=1]
+[ext_resource path="res://scenes/UI/WorldEnvironment.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/Menu.gd" type="Script" id=3]
+[ext_resource path="res://assets/fonts/Pixellari.ttf" type="DynamicFontData" id=4]
+[ext_resource path="res://scenes/UI/Button.gd" type="Script" id=5]
+[ext_resource path="res://scenes/UI/Button.tscn" type="PackedScene" id=6]
+[ext_resource path="res://assets/player/Square.png" type="Texture" id=7]
+[ext_resource path="res://scripts/FadeIn.gd" type="Script" id=8]
+[ext_resource path="res://assets/player/Hearts1.png" type="Texture" id=9]
+[ext_resource path="res://scripts/HeartsText.gd" type="Script" id=10]
+[ext_resource path="res://PixelFont.tres" type="DynamicFont" id=11]
+[ext_resource path="res://assets/music/Menu.wav" type="AudioStream" id=12]
+[ext_resource path="res://assets/UI/Config.png" type="Texture" id=13]
+[ext_resource path="res://assets/player/Title.png" type="Texture" id=14]
+[ext_resource path="res://assets/UI/Quit.png" type="Texture" id=15]
+[ext_resource path="res://assets/UI/Statistics.png" type="Texture" id=16]
+[ext_resource path="res://assets/UI/Back.png" type="Texture" id=17]
+[ext_resource path="res://assets/UI/How.png" type="Texture" id=18]
+[ext_resource path="res://assets/UI/Store.png" type="Texture" id=19]
+[ext_resource path="res://scripts/ColorButton.gd" type="Script" id=20]
+[ext_resource path="res://assets/sounds/Powerup.wav" type="AudioStream" id=21]
+
+[sub_resource type="DynamicFont" id=1]
+size = 32
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="Theme" id=8]
+HScrollBar/icons/decrement = null
+HScrollBar/icons/decrement_highlight = null
+HScrollBar/icons/increment = null
+HScrollBar/icons/increment_highlight = null
+HScrollBar/styles/grabber = SubResource( 3 )
+HScrollBar/styles/grabber_highlight = SubResource( 4 )
+HScrollBar/styles/grabber_pressed = SubResource( 5 )
+HScrollBar/styles/scroll = SubResource( 6 )
+HScrollBar/styles/scroll_focus = SubResource( 7 )
+
+[sub_resource type="Animation" id=9]
+length = 0.6
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("../../..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "start_game"
+} ]
+}
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="Theme" id=15]
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = SubResource( 10 )
+VScrollBar/styles/grabber_highlight = SubResource( 11 )
+VScrollBar/styles/grabber_pressed = SubResource( 12 )
+VScrollBar/styles/scroll = SubResource( 13 )
+VScrollBar/styles/scroll_focus = SubResource( 14 )
+
+[sub_resource type="DynamicFont" id=16]
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=17]
+font_data = ExtResource( 4 )
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxEmpty" id=19]
+
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="StyleBoxEmpty" id=21]
+
+[sub_resource type="StyleBoxEmpty" id=22]
+
+[sub_resource type="Theme" id=23]
+HSlider/icons/grabber = null
+HSlider/icons/grabber_disabled = null
+HSlider/icons/grabber_highlight = null
+HSlider/icons/tick = null
+HSlider/styles/grabber_area = null
+HSlider/styles/grabber_area_highlight = null
+HSlider/styles/slider = null
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/styles/grabber = SubResource( 18 )
+VScrollBar/styles/grabber_highlight = SubResource( 19 )
+VScrollBar/styles/grabber_pressed = SubResource( 20 )
+VScrollBar/styles/scroll = SubResource( 21 )
+VScrollBar/styles/scroll_focus = SubResource( 22 )
+
+[node name="Menu" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="WorldEnvironment" parent="." instance=ExtResource( 2 )]
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2( 320, 180 )
+current = true
+
+[node name="MenuUI" type="Node2D" parent="."]
+
+[node name="TitleScreen" type="Control" parent="MenuUI"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="HBoxContainer" parent="MenuUI/TitleScreen"]
+margin_top = 200.0
+margin_right = 256.0
+margin_bottom = 238.0
+rect_scale = Vector2( 2.5, 2.5 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Options" parent="MenuUI/TitleScreen/Buttons" instance=ExtResource( 6 )]
+margin_left = 82.0
+margin_right = 110.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 13 )
+
+[node name="Solo" parent="MenuUI/TitleScreen/Buttons" instance=ExtResource( 6 )]
+margin_left = 114.0
+margin_right = 142.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 1 )
+script = ExtResource( 5 )
+
+[node name="Quit" parent="MenuUI/TitleScreen/Buttons" instance=ExtResource( 6 )]
+margin_left = 146.0
+margin_right = 174.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 15 )
+
+[node name="Buttons2" type="HBoxContainer" parent="MenuUI/TitleScreen"]
+margin_top = 280.0
+margin_right = 320.0
+margin_bottom = 318.0
+rect_scale = Vector2( 2, 2 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Statistics" parent="MenuUI/TitleScreen/Buttons2" instance=ExtResource( 6 )]
+margin_left = 130.0
+margin_right = 158.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 16 )
+
+[node name="DevTeam" parent="MenuUI/TitleScreen/Buttons2" instance=ExtResource( 6 )]
+margin_left = 162.0
+margin_right = 190.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 18 )
+script = ExtResource( 5 )
+
+[node name="GameVersion" type="Label" parent="MenuUI/TitleScreen"]
+margin_left = 15.0
+margin_top = 10.0
+margin_right = 115.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 2 )
+text = "V 0.1"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PixelLabs" type="Label" parent="MenuUI/TitleScreen"]
+margin_left = 480.0
+margin_top = 10.0
+margin_right = 624.0
+margin_bottom = 26.0
+custom_fonts/font = SubResource( 2 )
+text = "Pixel Labs Gaming"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Title" type="Sprite" parent="MenuUI"]
+position = Vector2( 320, 130 )
+scale = Vector2( 6, 6 )
+texture = ExtResource( 14 )
+
+[node name="SoloMenu" type="Node2D" parent="."]
+position = Vector2( 640, 0 )
+z_index = 20
+
+[node name="TitleScreen" type="Control" parent="SoloMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="HBoxContainer" parent="SoloMenu/TitleScreen"]
+margin_top = 270.0
+margin_right = 256.0
+margin_bottom = 308.0
+rect_scale = Vector2( 2.5, 2.5 )
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" parent="SoloMenu/TitleScreen/Buttons" instance=ExtResource( 6 )]
+margin_left = 82.0
+margin_right = 110.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 17 )
+align = 0
+
+[node name="GO" parent="SoloMenu/TitleScreen/Buttons" instance=ExtResource( 6 )]
+margin_left = 114.0
+margin_right = 142.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 1 )
+align = 0
+script = ExtResource( 5 )
+
+[node name="Shop" parent="SoloMenu/TitleScreen/Buttons" instance=ExtResource( 6 )]
+margin_left = 146.0
+margin_right = 174.0
+margin_bottom = 38.0
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 19 )
+align = 0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SoloMenu/TitleScreen"]
+margin_left = 1.0
+margin_top = 100.0
+margin_right = 212.0
+margin_bottom = 122.0
+rect_scale = Vector2( 3, 3 )
+mouse_filter = 1
+theme = SubResource( 8 )
+follow_focus = true
+scroll_vertical_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Colors" type="HBoxContainer" parent="SoloMenu/TitleScreen/ScrollContainer"]
+margin_right = 524.0
+margin_bottom = 22.0
+custom_constants/separation = 3
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Blank" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 0 )
+margin_right = 28.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Blank2" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 0 )
+margin_left = 31.0
+margin_right = 59.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Blank1" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 0 )
+margin_left = 62.0
+margin_right = 90.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Blue" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 1 )
+margin_left = 93.0
+margin_right = 121.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+script = ExtResource( 20 )
+button_name = "Blue"
+color = Color( 0.0352941, 0.133333, 0.968627, 1 )
+
+[node name="Cyan" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0, 0.6, 1, 1 )
+margin_left = 124.0
+margin_right = 152.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="DarkBlue" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.00392157, 0.0117647, 0.286275, 1 )
+margin_left = 155.0
+margin_right = 183.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Green" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0745098, 0.517647, 0.0235294, 1 )
+margin_left = 186.0
+margin_right = 214.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Lime" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.160784, 1, 0.00784314, 1 )
+margin_left = 217.0
+margin_right = 245.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="DarkGreen" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0509804, 0.247059, 0.027451, 1 )
+margin_left = 248.0
+margin_right = 276.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Magenta" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.533333, 0, 0.490196, 1 )
+margin_left = 279.0
+margin_right = 307.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Pink" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 1, 0, 0.898039, 1 )
+margin_left = 310.0
+margin_right = 338.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Purple" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.278431, 0, 0.403922, 1 )
+margin_left = 341.0
+margin_right = 369.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Red" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 1, 0, 0, 1 )
+margin_left = 372.0
+margin_right = 400.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Crimson" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.329412, 0, 0, 1 )
+margin_left = 403.0
+margin_right = 431.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Blank3" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 0 )
+margin_left = 434.0
+margin_right = 462.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Blank4" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 0 )
+margin_left = 465.0
+margin_right = 493.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="Blank5" type="Button" parent="SoloMenu/TitleScreen/ScrollContainer/Colors"]
+modulate = Color( 0.0352941, 0.133333, 0.968627, 0 )
+margin_left = 496.0
+margin_right = 524.0
+margin_bottom = 22.0
+focus_mode = 0
+mouse_filter = 1
+enabled_focus_mode = 0
+icon = ExtResource( 7 )
+flat = true
+
+[node name="ChooseColor" type="Label" parent="SoloMenu/TitleScreen"]
+margin_top = 60.0
+margin_right = 640.0
+margin_bottom = 92.0
+custom_fonts/font = ExtResource( 11 )
+text = "Choose your color"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BuyButton" type="VBoxContainer" parent="SoloMenu/TitleScreen"]
+margin_top = 180.0
+margin_right = 640.0
+margin_bottom = 254.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cost" type="Label" parent="SoloMenu/TitleScreen/BuyButton"]
+margin_right = 640.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 11 )
+align = 1
+valign = 1
+
+[node name="Buy" type="Button" parent="SoloMenu/TitleScreen/BuyButton"]
+margin_top = 36.0
+margin_right = 640.0
+margin_bottom = 74.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 11 )
+enabled_focus_mode = 0
+text = "Select"
+flat = true
+
+[node name="FadeIn" type="ColorRect" parent="SoloMenu/TitleScreen"]
+visible = false
+margin_right = 640.0
+margin_bottom = 360.0
+color = Color( 0, 0, 0, 0 )
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SoloMenu/TitleScreen/FadeIn"]
+anims/FadeIn = SubResource( 9 )
+
+[node name="StatisticsMenu" type="Node2D" parent="."]
+position = Vector2( -640, 0 )
+z_index = 20
+
+[node name="TitleScreen" type="Control" parent="StatisticsMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="StatisticsMenu/TitleScreen"]
+margin_left = 198.0
+margin_top = 60.0
+margin_right = 441.0
+margin_bottom = 360.0
+theme = SubResource( 15 )
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="StatisticsMenu/TitleScreen/ScrollContainer"]
+margin_right = 243.0
+margin_bottom = 456.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stuff" type="VBoxContainer" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer"]
+margin_right = 208.0
+margin_bottom = 456.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GamesPlayed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_right = 208.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 16 )
+text = "Games Played"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletsFired" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 20.0
+margin_right = 208.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 16 )
+text = "Bullets Fired"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletsHit" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 40.0
+margin_right = 208.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 16 )
+text = "Bullets Hit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Precision" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 60.0
+margin_right = 208.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 16 )
+text = "Precision"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+modulate = Color( 0.4, 0.4, 0.4, 1 )
+margin_top = 80.0
+margin_right = 208.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 16 )
+text = "Squares Destroyed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RedSquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 100.0
+margin_right = 208.0
+margin_bottom = 116.0
+custom_fonts/font = SubResource( 16 )
+text = "   Normal Squares Destroyed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="YellowSquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 120.0
+margin_right = 208.0
+margin_bottom = 136.0
+custom_fonts/font = SubResource( 16 )
+text = "   Fast Squares Destroyed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OrangeSquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 140.0
+margin_right = 208.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 16 )
+text = "   Tank Squares Destroyed"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerUpsCollected" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+modulate = Color( 0.4, 0.4, 0.4, 1 )
+margin_top = 160.0
+margin_right = 208.0
+margin_bottom = 176.0
+custom_fonts/font = SubResource( 16 )
+text = "Power Ups Collected"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShootFaster" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 180.0
+margin_right = 208.0
+margin_bottom = 196.0
+custom_fonts/font = SubResource( 16 )
+text = "   Shoot Faster Collected"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthUp" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 200.0
+margin_right = 208.0
+margin_bottom = 216.0
+custom_fonts/font = SubResource( 16 )
+text = "   Health Up Collected"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="X2" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 220.0
+margin_right = 208.0
+margin_bottom = 236.0
+custom_fonts/font = SubResource( 16 )
+text = "   x2 Collected"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageDealt" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 240.0
+margin_right = 208.0
+margin_bottom = 256.0
+custom_fonts/font = SubResource( 16 )
+text = "Damage Dealt"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageTaken" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 260.0
+margin_right = 208.0
+margin_bottom = 276.0
+custom_fonts/font = SubResource( 16 )
+text = "Damage Taken"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deaths" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+modulate = Color( 0.4, 0.4, 0.4, 1 )
+margin_top = 280.0
+margin_right = 208.0
+margin_bottom = 296.0
+custom_fonts/font = SubResource( 16 )
+text = "Deaths"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledByNormal" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 300.0
+margin_right = 208.0
+margin_bottom = 316.0
+custom_fonts/font = SubResource( 16 )
+text = "   Killed by Normal Square"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledByFast" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 320.0
+margin_right = 208.0
+margin_bottom = 336.0
+custom_fonts/font = SubResource( 16 )
+text = "   Killed by Fast Square"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledByTank" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 340.0
+margin_right = 208.0
+margin_bottom = 356.0
+custom_fonts/font = SubResource( 16 )
+text = "   Killed by Tank Square"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighestScore" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 360.0
+margin_right = 208.0
+margin_bottom = 376.0
+custom_fonts/font = SubResource( 16 )
+text = "Highest Score"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalScore" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 380.0
+margin_right = 208.0
+margin_bottom = 396.0
+custom_fonts/font = SubResource( 16 )
+text = "Total Score"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighestMoney" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 400.0
+margin_right = 208.0
+margin_bottom = 416.0
+custom_fonts/font = SubResource( 16 )
+text = "Highest Money"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalMoney" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 420.0
+margin_right = 208.0
+margin_bottom = 436.0
+custom_fonts/font = SubResource( 16 )
+text = "Total Money"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoneySpent" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Stuff"]
+margin_top = 440.0
+margin_right = 208.0
+margin_bottom = 456.0
+custom_fonts/font = SubResource( 16 )
+text = "Total Money Spent"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VSeparator" type="VSeparator" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer"]
+margin_left = 212.0
+margin_right = 216.0
+margin_bottom = 456.0
+
+[node name="Statistics" type="VBoxContainer" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer"]
+margin_left = 220.0
+margin_right = 243.0
+margin_bottom = 456.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GamesPlayed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_right = 23.0
+margin_bottom = 16.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletsFired" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 20.0
+margin_right = 23.0
+margin_bottom = 36.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BulletsHit" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 40.0
+margin_right = 23.0
+margin_bottom = 56.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Precision" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 60.0
+margin_right = 23.0
+margin_bottom = 76.0
+custom_fonts/font = SubResource( 16 )
+text = "0%"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+modulate = Color( 0.4, 0.4, 0.4, 1 )
+margin_top = 80.0
+margin_right = 23.0
+margin_bottom = 96.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NormalSquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 100.0
+margin_right = 23.0
+margin_bottom = 116.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FastSquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 120.0
+margin_right = 23.0
+margin_bottom = 136.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TankSquaresDestroyed" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 140.0
+margin_right = 23.0
+margin_bottom = 156.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PowerUpsCollected" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+modulate = Color( 0.4, 0.4, 0.4, 1 )
+margin_top = 160.0
+margin_right = 23.0
+margin_bottom = 176.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ShootFaster" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 180.0
+margin_right = 23.0
+margin_bottom = 196.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HealthUp" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 200.0
+margin_right = 23.0
+margin_bottom = 216.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="X2" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 220.0
+margin_right = 23.0
+margin_bottom = 236.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageDealt" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 240.0
+margin_right = 23.0
+margin_bottom = 256.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DamageTaken" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 260.0
+margin_right = 23.0
+margin_bottom = 276.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Deaths" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+modulate = Color( 0.4, 0.4, 0.4, 1 )
+margin_top = 280.0
+margin_right = 23.0
+margin_bottom = 296.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledByNormal" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 300.0
+margin_right = 23.0
+margin_bottom = 316.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledByFast" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 320.0
+margin_right = 23.0
+margin_bottom = 336.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KilledByTank" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 340.0
+margin_right = 23.0
+margin_bottom = 356.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighestScore" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 360.0
+margin_right = 23.0
+margin_bottom = 376.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalScore" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 380.0
+margin_right = 23.0
+margin_bottom = 396.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HighestMoney" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 400.0
+margin_right = 23.0
+margin_bottom = 416.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TotalMoney" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 420.0
+margin_right = 23.0
+margin_bottom = 436.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoneySpent" type="Label" parent="StatisticsMenu/TitleScreen/ScrollContainer/HBoxContainer/Statistics"]
+margin_top = 440.0
+margin_right = 23.0
+margin_bottom = 456.0
+custom_fonts/font = SubResource( 16 )
+text = "0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Back" parent="StatisticsMenu/TitleScreen" instance=ExtResource( 6 )]
+margin_left = 619.616
+margin_top = 273.241
+margin_right = 647.616
+margin_bottom = 311.241
+rect_scale = Vector2( -3, 3 )
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 17 )
+
+[node name="Statistics" type="Label" parent="StatisticsMenu/TitleScreen"]
+margin_top = 20.0
+margin_right = 640.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 11 )
+text = "Statistics"
+align = 1
+valign = 1
+
+[node name="ShopMenu" type="Node2D" parent="."]
+position = Vector2( 640, -360 )
+
+[node name="TitleScreen" type="Control" parent="ShopMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MaxHealth" type="Label" parent="ShopMenu/TitleScreen"]
+visible = false
+margin_left = 178.196
+margin_top = 255.554
+margin_right = 468.196
+margin_bottom = 271.554
+custom_fonts/font = ExtResource( 11 )
+text = "You have the maximum health available"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackS" parent="ShopMenu/TitleScreen" instance=ExtResource( 6 )]
+margin_top = 260.0
+margin_right = 28.0
+margin_bottom = 298.0
+rect_scale = Vector2( 3, 3 )
+custom_fonts/font = SubResource( 1 )
+text = ""
+icon = ExtResource( 17 )
+
+[node name="Money" type="Label" parent="ShopMenu/TitleScreen"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 530.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 11 )
+text = "Money:"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Graphics" type="Node2D" parent="ShopMenu"]
+
+[node name="Hearts" type="Sprite" parent="ShopMenu/Graphics"]
+position = Vector2( 320, 120 )
+scale = Vector2( 10, 10 )
+texture = ExtResource( 9 )
+
+[node name="HeartsText" type="Label" parent="ShopMenu/Graphics"]
+margin_left = 280.45
+margin_top = 103.56
+margin_right = 320.45
+margin_bottom = 119.56
+rect_scale = Vector2( 2, 2 )
+custom_fonts/font = SubResource( 17 )
+text = "1"
+align = 1
+valign = 1
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsMenu" type="Node2D" parent="."]
+position = Vector2( 0, 360 )
+
+[node name="TitleScreen" type="Control" parent="OptionsMenu"]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Settings" type="HBoxContainer" parent="OptionsMenu/TitleScreen"]
+margin_top = 30.0
+margin_right = 640.0
+margin_bottom = 330.0
+custom_constants/separation = 15
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Categories" type="VBoxContainer" parent="OptionsMenu/TitleScreen/Settings"]
+margin_left = 84.0
+margin_right = 216.0
+margin_bottom = 300.0
+alignment = 1
+
+[node name="Graphics" type="Label" parent="OptionsMenu/TitleScreen/Settings/Categories"]
+margin_top = 98.0
+margin_right = 132.0
+margin_bottom = 130.0
+custom_fonts/font = ExtResource( 11 )
+text = "Graphics"
+align = 2
+valign = 1
+
+[node name="Sounds" type="Label" parent="OptionsMenu/TitleScreen/Settings/Categories"]
+modulate = Color( 1, 1, 1, 0.196078 )
+margin_top = 134.0
+margin_right = 132.0
+margin_bottom = 166.0
+custom_fonts/font = ExtResource( 11 )
+text = "Sounds"
+align = 2
+valign = 1
+
+[node name="Language" type="Label" parent="OptionsMenu/TitleScreen/Settings/Categories"]
+modulate = Color( 1, 1, 1, 0.196078 )
+margin_top = 170.0
+margin_right = 132.0
+margin_bottom = 202.0
+custom_fonts/font = ExtResource( 11 )
+text = "Language"
+align = 2
+valign = 1
+
+[node name="VSeparator" type="VSeparator" parent="OptionsMenu/TitleScreen/Settings"]
+margin_left = 231.0
+margin_right = 235.0
+margin_bottom = 300.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OptionsMenu/TitleScreen/Settings"]
+margin_left = 250.0
+margin_right = 556.0
+margin_bottom = 300.0
+mouse_filter = 1
+theme = SubResource( 23 )
+follow_focus = true
+scroll_horizontal_enabled = false
+scroll_vertical = 38
+
+[node name="Options" type="VBoxContainer" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer"]
+margin_top = -38.0
+margin_right = 306.0
+margin_bottom = 300.0
+alignment = 1
+
+[node name="Blank" type="Label" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_right = 306.0
+margin_bottom = 32.0
+custom_fonts/font = ExtResource( 11 )
+align = 1
+valign = 1
+
+[node name="Blank2" type="Label" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 36.0
+margin_right = 306.0
+margin_bottom = 68.0
+custom_fonts/font = ExtResource( 11 )
+align = 1
+valign = 1
+
+[node name="Blank3" type="Label" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 72.0
+margin_right = 306.0
+margin_bottom = 104.0
+custom_fonts/font = ExtResource( 11 )
+align = 1
+valign = 1
+
+[node name="TogglePostProcessing" type="CheckButton" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 108.0
+margin_right = 306.0
+margin_bottom = 148.0
+focus_mode = 0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 11 )
+enabled_focus_mode = 0
+text = "Post Processing"
+flat = true
+align = 1
+
+[node name="HSeparator" type="HSeparator" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 152.0
+margin_right = 306.0
+margin_bottom = 156.0
+
+[node name="ToggleMusic" type="CheckButton" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 160.0
+margin_right = 306.0
+margin_bottom = 200.0
+focus_mode = 0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 11 )
+enabled_focus_mode = 0
+text = "Music"
+align = 1
+
+[node name="ToggleSoundEffects" type="CheckButton" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 204.0
+margin_right = 306.0
+margin_bottom = 244.0
+focus_mode = 0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 11 )
+enabled_focus_mode = 0
+text = "Sound Effects"
+align = 1
+
+[node name="ToggleUISound" type="CheckButton" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 248.0
+margin_right = 306.0
+margin_bottom = 288.0
+focus_mode = 0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 11 )
+enabled_focus_mode = 0
+text = "UI Sound"
+align = 1
+
+[node name="HSeparator2" type="HSeparator" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 292.0
+margin_right = 306.0
+margin_bottom = 296.0
+
+[node name="ToggleLanguage" type="OptionButton" parent="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options"]
+margin_top = 300.0
+margin_right = 306.0
+margin_bottom = 338.0
+focus_mode = 0
+mouse_filter = 1
+custom_fonts/font = ExtResource( 11 )
+enabled_focus_mode = 0
+text = "Hey There"
+
+[node name="Back" parent="OptionsMenu/TitleScreen" instance=ExtResource( 6 )]
+margin_top = 260.0
+margin_right = 30.0
+margin_bottom = 298.0
+rect_scale = Vector2( 3, 3 )
+focus_mode = 0
+custom_fonts/font = SubResource( 1 )
+enabled_focus_mode = 0
+text = ""
+icon = ExtResource( 17 )
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -20.0
+
+[node name="Buy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 21 )
+volume_db = -20.0
+[connection signal="pressed" from="MenuUI/TitleScreen/Buttons/Options" to="." method="_on_Options_pressed"]
+[connection signal="pressed" from="MenuUI/TitleScreen/Buttons/Solo" to="." method="_on_Solo_pressed"]
+[connection signal="pressed" from="MenuUI/TitleScreen/Buttons/Quit" to="." method="_on_Quit_pressed"]
+[connection signal="pressed" from="MenuUI/TitleScreen/Buttons2/Statistics" to="." method="_on_Statistics_pressed"]
+[connection signal="pressed" from="SoloMenu/TitleScreen/Buttons/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="SoloMenu/TitleScreen/Buttons/GO" to="." method="_on_GO_pressed"]
+[connection signal="pressed" from="SoloMenu/TitleScreen/Buttons/Shop" to="." method="_on_Shop_pressed"]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Blue" to="." method="_on_Button_pressed" binds= [ "blue", 0, Color( 0.0352941, 0.133333, 0.968627, 1 ), 0 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Cyan" to="." method="_on_Button_pressed" binds= [ "cyan", 1, Color( 0, 0.6, 1, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/DarkBlue" to="." method="_on_Button_pressed" binds= [ "dark_blue", 2, Color( 0.00392157, 0.0117647, 0.286275, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Green" to="." method="_on_Button_pressed" binds= [ "green", 3, Color( 0.0745098, 0.517647, 0.0235294, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Lime" to="." method="_on_Button_pressed" binds= [ "lime", 4, Color( 0.160784, 1, 0.00784314, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/DarkGreen" to="." method="_on_Button_pressed" binds= [ "dark_green", 5, Color( 0.0509804, 0.247059, 0.027451, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Magenta" to="." method="_on_Button_pressed" binds= [ "magenta", 6, Color( 0.533333, 0, 0.490196, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Pink" to="." method="_on_Button_pressed" binds= [ "pink", 7, Color( 1, 0, 0.898039, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Purple" to="." method="_on_Button_pressed" binds= [ "purple", 8, Color( 0.278431, 0, 0.403922, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Red" to="." method="_on_Button_pressed" binds= [ "red", 9, Color( 1, 0, 0, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/ScrollContainer/Colors/Crimson" to="." method="_on_Button_pressed" binds= [ "crimson", 10, Color( 0.329412, 0, 0, 1 ), 150 ]]
+[connection signal="pressed" from="SoloMenu/TitleScreen/BuyButton/Buy" to="." method="_on_Buy_pressed"]
+[connection signal="pressed" from="StatisticsMenu/TitleScreen/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="ShopMenu/TitleScreen/BackS" to="." method="_on_BackS_pressed"]
+[connection signal="toggled" from="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options/TogglePostProcessing" to="." method="_on_TogglePostProcessing_toggled"]
+[connection signal="item_selected" from="OptionsMenu/TitleScreen/Settings/ScrollContainer/Options/ToggleLanguage" to="." method="_on_ToggleLanguage_item_selected"]
+[connection signal="pressed" from="OptionsMenu/TitleScreen/Back" to="." method="_on_Back_pressed"]
+[connection signal="finished" from="Music" to="." method="_on_Music_finished"]
